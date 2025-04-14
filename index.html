@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PCOS Detection</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        form {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .check-btn {
+            background-color: #28a745;
+            color: white;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background-color: #218838;
+        }
+
+        .image-preview {
+            margin-top: 20px;
+        }
+
+        .image-preview img {
+            max-width: 300px;
+            border-radius: 10px;
+            border: 3px solid #fff;
+        }
+
+        h2 {
+            color: #fff;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Upload Image for PCOS Detection</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+        <br>
+        <button type="submit" class="check-btn">Check</button>
+
+        <div class="image-preview" id="imagePreview" style="display:none;">
+            <h3>Preview:</h3>
+            <img id="previewImg" src="#" alt="Image Preview">
+        </div>
+    </form>
+
+    {% if prediction %}
+        <h2>Prediction: {{ prediction }}</h2>
+        {% if image_path %}
+            <div class="image-preview">
+                <img src="{{ image_path }}" alt="Uploaded Image">
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <script>
+        function previewImage(event) {
+            const imagePreview = document.getElementById("imagePreview");
+            const previewImg = document.getElementById("previewImg");
+            previewImg.src = URL.createObjectURL(event.target.files[0]);
+            imagePreview.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
